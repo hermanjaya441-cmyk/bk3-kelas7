@@ -1,0 +1,707 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Lembar Kerja BK3-TP1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Konsep tata letak: kepala halaman biru tua, tab navigasi lengket, satu kolom isi (maks 880px).
+   Ruang praktik berupa lembar kerja mini yang bisa diklik dan diketik. Semua teks Arial 9 pt. */
+:root{
+  --bg:#F4F7FB; --surface:#FFFFFF; --fg:#1B2430; --muted:#566274; --line:#D3DCE8;
+  --navy:#1F4E79; --accent:#C9561A; --blue:#1F6FD0; --good:#1F7A3D; --bad:#B8321F;
+  --t-navy:#E8F0F8; --t-orange:#FDEBDD; --t-blue:#DCEBFA; --t-green:#DDF2E3; --t-purple:#EDE3F7; --t-bad:#FBE3DF;
+  --head:#E7EBF0; --btn:#1F4E79; --btn-fg:#FFFFFF; --hero:#1F4E79; --hero-fg:#FFFFFF; --hero-sub:#CFE0F1;
+  --code-bg:#ECF0F5; --focus:#E8702A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10151C; --surface:#18202A; --fg:#E7ECF3; --muted:#9BA8BA; --line:#2E3947;
+    --navy:#8EBBE8; --accent:#F28F52; --blue:#74AEF2; --good:#62C885; --bad:#F27D6C;
+    --t-navy:#1D2A3A; --t-orange:#3A2A1F; --t-blue:#1C3250; --t-green:#1B3426; --t-purple:#2E2641; --t-bad:#3D2321;
+    --head:#222C38; --btn:#2F6AA3; --btn-fg:#FFFFFF; --hero:#16314D; --hero-fg:#FFFFFF; --hero-sub:#B7CCE3;
+    --code-bg:#222C38; --focus:#F28F52; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10151C; --surface:#18202A; --fg:#E7ECF3; --muted:#9BA8BA; --line:#2E3947;
+  --navy:#8EBBE8; --accent:#F28F52; --blue:#74AEF2; --good:#62C885; --bad:#F27D6C;
+  --t-navy:#1D2A3A; --t-orange:#3A2A1F; --t-blue:#1C3250; --t-green:#1B3426; --t-purple:#2E2641; --t-bad:#3D2321;
+  --head:#222C38; --btn:#2F6AA3; --btn-fg:#FFFFFF; --hero:#16314D; --hero-fg:#FFFFFF; --hero-sub:#B7CCE3;
+  --code-bg:#222C38; --focus:#F28F52; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:9pt/1.55 Arial,'Liberation Sans',Helvetica,sans-serif;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.wrap{max-width:880px;margin:0 auto}
+h1,h2,h3,h4{font-family:inherit;text-wrap:balance;margin:0}
+h1{font-size:20px;line-height:1.2;color:var(--hero-fg)}
+h2{font-size:15px;color:var(--navy);margin-bottom:8px}
+h3{font-size:12px;color:var(--navy);margin:14px 0 6px}
+p{margin:0 0 8px}
+code,.k{font-family:inherit;font-weight:700;background:var(--code-bg);color:var(--navy);padding:0 4px;border-radius:3px;white-space:nowrap}
+a{color:var(--blue)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.hero{background:var(--hero);color:var(--hero-fg);margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:22px max(16px,env(safe-area-inset-left,0px)) 18px;border-bottom:4px solid var(--accent)}
+.hero .in{max-width:880px;margin:0 auto}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-sub);margin-bottom:6px}
+.hero .sub{color:var(--hero-sub);margin-top:8px;font-size:11px}
+.hero .tp{margin-top:10px;max-width:68ch;color:var(--hero-fg)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin:0 calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:0 max(16px,env(safe-area-inset-left,0px))}
+nav.tabs .in{max-width:880px;margin:0 auto;display:flex;gap:2px;overflow-x:auto}
+nav.tabs a{padding:10px 12px;text-decoration:none;color:var(--muted);font-weight:700;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a[aria-current="page"]{color:var(--navy);border-bottom-color:var(--accent)}
+nav.tabs a:hover{color:var(--navy)}
+main{padding-top:18px}
+section.pane{display:block}
+section.pane[hidden]{display:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.card.itp{border-left:4px solid var(--navy)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.pill{display:inline-block;font-size:10px;font-weight:700;padding:1px 8px;border-radius:10px;background:var(--t-navy);color:var(--navy)}
+.pill.ok{background:var(--t-green);color:var(--good)}
+.btn{background:var(--btn);color:var(--btn-fg);border:0;border-radius:6px;padding:6px 12px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
+.btn.small{padding:3px 9px;font-size:11px}
+.btn[aria-pressed="true"]{background:var(--good);color:#fff}
+.tablebox{overflow-x:auto;margin:6px 0 10px}
+table.t{border-collapse:collapse;width:100%;min-width:420px}
+table.t th,table.t td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+table.t th{background:var(--head);color:var(--fg)}
+.callout{border-left:4px solid var(--accent);background:var(--t-orange);padding:8px 12px;border-radius:0 6px 6px 0;margin:8px 0}
+.callout.blue{border-left-color:var(--blue);background:var(--t-blue)}
+.callout b.h{display:block;margin-bottom:2px}
+ul,ol{margin:4px 0 8px;padding-left:20px}
+li{margin:2px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+/* peta konsep */
+.map{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:12px;margin:8px 0}
+@media (max-width:640px){.map{grid-template-columns:1fr}}
+.wb{border:2px dashed var(--navy);border-radius:10px;padding:10px;background:var(--t-navy)}
+.ws{border:2px solid var(--good);border-radius:8px;padding:8px;background:var(--surface);margin-top:8px}
+.lab{font-weight:700;color:var(--navy)}
+.ws .lab{color:var(--good)}
+.tabsim{display:flex;gap:5px;margin-top:6px}
+.tabsim span{border:1px solid var(--line);padding:1px 8px;border-radius:4px 4px 0 0;background:var(--surface);font-size:11px}
+.tabsim span.on{border-bottom:3px solid var(--good);font-weight:700;color:var(--good)}
+.mini{display:grid;grid-template-columns:26px repeat(4,1fr);margin:8px 0;max-width:300px}
+.mini div{border:1px solid var(--line);height:24px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.mini .h{background:var(--t-purple);font-weight:700}
+.mini .r{background:var(--t-green);font-weight:700}
+.mini .c{background:var(--t-orange);outline:2px solid var(--accent);outline-offset:-2px;font-weight:700}
+.mini .g{background:var(--t-blue)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px}
+.chip.p{background:var(--t-purple)}.chip.g{background:var(--t-green)}.chip.o{background:var(--t-orange)}.chip.b{background:var(--t-blue)}
+.kinds{display:flex;flex-direction:column;gap:8px}
+.kind{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--surface)}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:8px 0}
+.step{border:1.5px solid var(--navy);border-radius:8px;padding:8px;background:var(--t-navy);text-align:center}
+.step .n{width:22px;height:22px;border-radius:50%;background:var(--navy);color:var(--surface);font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
+.step b{display:block;color:var(--navy)}
+/* lab */
+.bars{display:flex;gap:8px;align-items:stretch;margin-bottom:8px}
+#nameBox{width:84px;font:inherit;font-weight:700;text-align:center;border:1.5px solid var(--line);border-radius:4px;padding:5px;background:var(--surface);color:var(--fg)}
+.fxwrap{flex:1;display:flex;align-items:center;border:1.5px solid var(--line);border-radius:4px;background:var(--surface);min-width:0}
+.fxwrap i{font-family:Georgia,serif;font-weight:700;color:var(--muted);padding:0 8px;font-size:13px}
+#fx{flex:1;min-width:0;font:inherit;border:0;background:transparent;color:var(--fg);padding:6px 4px;outline:0}
+.fxwrap:focus-within,#nameBox:focus{border-color:var(--focus)}
+.sheetbox{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+#grid{border-collapse:collapse;min-width:560px;width:100%;table-layout:fixed;user-select:none;-webkit-user-select:none;outline:0}
+#grid th{background:var(--head);color:var(--muted);font-weight:700;border:1px solid var(--line);height:26px;text-align:center}
+#grid th.rh{width:34px}
+#grid td{border:1px solid var(--line);height:28px;padding:0 8px;overflow:hidden;white-space:nowrap;text-overflow:clip;cursor:cell;position:relative}
+#grid td.num{text-align:right}
+#grid td.err{text-align:center;color:var(--bad);font-weight:700}
+#grid td.in{background:var(--t-blue)}
+#grid td.act{outline:2px solid var(--accent);outline-offset:-2px;background:var(--t-orange);font-weight:700}
+#grid th.hl{background:var(--t-purple);color:var(--fg)}
+#grid th.rhl{background:var(--t-green);color:var(--fg)}
+.status{margin:8px 0;padding:8px 10px;border-radius:6px;background:var(--t-navy);display:grid;gap:2px}
+.status b{color:var(--navy)}
+.msg{margin-top:6px;padding:6px 10px;border-radius:6px;background:var(--t-bad);color:var(--fg);display:none}
+.msg.show{display:block}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chal{list-style:none;padding:0;margin:6px 0}
+.chal li{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border:1px solid var(--line);border-radius:6px;margin:4px 0;background:var(--surface)}
+.chal .ck{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:transparent;margin-top:1px}
+.chal li.done{background:var(--t-green);border-color:var(--good)}
+.chal li.done .ck{background:var(--good);border-color:var(--good);color:#fff}
+.bar{height:8px;background:var(--head);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--good);width:0;transition:width .3s}
+/* latihan */
+.q{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}
+.q.ok{border-color:var(--good);background:var(--t-green)}
+.q.no{border-color:var(--bad);background:var(--t-bad)}
+.q .qt{font-weight:700;margin-bottom:6px}
+.q label{display:flex;gap:8px;align-items:flex-start;padding:3px 0;cursor:pointer}
+.q input[type=text],.q input[type=number]{font:inherit;padding:5px 8px;border:1.5px solid var(--line);border-radius:4px;background:var(--surface);color:var(--fg);width:140px}
+.fb{margin-top:6px;display:none}
+.fb.show{display:block}
+.score{font-size:15px;font-weight:700;color:var(--navy)}
+.refl label{display:flex;gap:8px;padding:5px 0;cursor:pointer;align-items:flex-start}
+.prog{display:grid;gap:10px}
+.prog .r{display:grid;grid-template-columns:150px 1fr 48px;gap:8px;align-items:center}
+@media (max-width:520px){.prog .r{grid-template-columns:1fr 1fr 40px}}
+.src{display:grid;gap:8px}
+.src .it{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--surface)}
+.src .it a{font-weight:700}
+.src .it small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+<header class="hero"><div class="in">
+  <div class="eyebrow">Informatika Kelas VII · Fase D · Berpikir Komputasional (BK3)</div>
+  <h1>BK3-TP1 · Konsep, Elemen, dan Pengelolaan Lembar Kerja</h1>
+  <p class="tp">Tujuan pembelajaran: memahami konsep, elemen, dan proses dasar pengelolaan lembar kerja (worksheet) sebagai perkakas pengolah data. Alokasi 3 JP.</p>
+  <div class="sub">Baca materi, coba langsung di lembar kerja mini, kerjakan latihan, lalu isi refleksi.</div>
+</div></header>
+
+<nav class="tabs" aria-label="Bagian halaman"><div class="in" id="tabs">
+  <a href="#materi" data-t="materi">Materi</a>
+  <a href="#lab" data-t="lab">Ruang praktik</a>
+  <a href="#latihan" data-t="latihan">Latihan</a>
+  <a href="#refleksi" data-t="refleksi">Refleksi</a>
+  <a href="#sumber" data-t="sumber">Sumber belajar</a>
+</div></nav>
+
+<main>
+<!-- ============ MATERI ============ -->
+<section class="pane" id="p-materi">
+  <div class="card">
+    <h2>Peta konsep</h2>
+    <div class="map">
+      <div class="wb">
+        <div class="lab">WORKBOOK (buku kerja)</div><div style="color:var(--muted)">Satu file, misalnya <code>Kas_Kelas7A.xlsx</code></div>
+        <div class="tabsim"><span class="on">Sheet1</span><span>Sheet2</span><span>+</span></div>
+        <div class="ws">
+          <div class="lab">WORKSHEET (lembar kerja) = Sheet1</div>
+          <div style="color:var(--muted)">Kumpulan sel dari kolom dan baris</div>
+          <div class="mini" aria-label="Contoh kisi: kolom A sampai D, baris 1 sampai 3">
+            <div></div><div class="h">A</div><div class="h">B</div><div class="h">C</div><div class="h">D</div>
+            <div class="r">1</div><div></div><div></div><div></div><div></div>
+            <div class="r">2</div><div></div><div class="c">B2</div><div class="g">C2</div><div></div>
+            <div class="r">3</div><div></div><div class="g">B3</div><div class="g">C3</div><div></div>
+          </div>
+          <div class="chips"><span class="chip p">Kolom: huruf</span><span class="chip g">Baris: angka</span><span class="chip o">Sel: B2</span><span class="chip b">Range: B2:C3</span></div>
+        </div>
+      </div>
+      <div class="kinds">
+        <div class="lab">Isi sebuah sel</div>
+        <div class="kind"><b>Angka</b> <code>85</code> <code>3,5</code><br><span style="color:var(--muted)">Dapat dihitung. Rata kanan.</span></div>
+        <div class="kind"><b>Teks</b> <code>Rina</code> <code>K03</code><br><span style="color:var(--muted)">Huruf atau campuran. Rata kiri.</span></div>
+        <div class="kind"><b>Formula</b> <code>=B2+C2</code><br><span style="color:var(--muted)">Diawali tanda sama dengan (=). Sel menampilkan hasilnya.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card itp" id="itp1">
+    <div class="row"><h2>ITP 1 · Pengertian dan fungsi lembar kerja</h2><button class="btn small" data-paham="1" aria-pressed="false">Saya paham</button></div>
+    <p><b>Lembar kerja (spreadsheet)</b> adalah aplikasi untuk mengolah data yang disusun dalam baris dan kolom. Contohnya Microsoft Excel, Google Sheets, LibreOffice Calc, dan WPS Spreadsheets.</p>
+    <p>Satu file disebut <b>workbook</b>, dan di dalamnya ada satu atau lebih <b>worksheet</b> (tab Sheet1, Sheet2, ...). Worksheet dapat dipilih (klik nama sheet), diganti namanya (klik kanan, Rename), ditambah (tombol +), dan dipindah (seret tab).</p>
+    <div class="grid2">
+      <div><h3>Fungsi lembar kerja</h3>
+        <ul><li><b>Menyimpan data</b> dengan rapi.</li><li><b>Menghitung otomatis</b> dengan rumus; data berubah, hasil ikut berubah.</li><li><b>Mengolah data</b>: urut, saring, ringkas (TP3).</li><li><b>Menyajikan data</b> dalam tabel dan grafik.</li></ul></div>
+      <div class="tablebox" style="margin:0"><table class="t" style="min-width:300px"><tr><th>Aspek</th><th>Pengolah kata</th><th>Lembar kerja</th></tr>
+        <tr><td>Fokus</td><td>Menulis teks</td><td>Menghitung data</td></tr>
+        <tr><td>Satuan</td><td>Paragraf</td><td>Sel</td></tr>
+        <tr><td>Hitungan</td><td>Tidak otomatis</td><td>Otomatis</td></tr></table></div>
+    </div>
+  </div>
+
+  <div class="card itp" id="itp2">
+    <div class="row"><h2>ITP 2 · Elemen lembar kerja</h2><button class="btn small" data-paham="2" aria-pressed="false">Saya paham</button></div>
+    <div class="tablebox"><table class="t"><tr><th>Elemen</th><th>Penjelasan</th><th>Penanda</th><th>Contoh</th></tr>
+      <tr><td><b>Kolom</b></td><td>Lajur tegak</td><td>Huruf A, B, C, ...</td><td>Kolom C</td></tr>
+      <tr><td><b>Baris</b></td><td>Lajur datar</td><td>Angka 1, 2, 3, ...</td><td>Baris 4</td></tr>
+      <tr><td><b>Sel</b></td><td>Pertemuan kolom dan baris; alamat = huruf kolom + nomor baris</td><td>Huruf lalu angka</td><td>C4, D3</td></tr>
+      <tr><td><b>Range</b></td><td>Kumpulan sel yang berdampingan: sel pojok kiri atas, titik dua, sel pojok kanan bawah</td><td>Dua alamat dipisah <code>:</code></td><td>B2:D4</td></tr></table></div>
+    <p><b>Kotak Nama (Name Box)</b> menunjukkan alamat sel aktif dan <b>Bilah Rumus (Formula Bar)</b> menampilkan isinya. Baca <b>kolom dulu, baru baris</b>. Banyak sel dalam range = banyak kolom × banyak baris. Sebuah sel adalah range terkecil.</p>
+    <div class="callout blue"><b class="h">Hitung cepat banyak sel</b>
+      B2:D4 = 3 × 3 = <b>9</b> · A1:A5 = 1 × 5 = <b>5</b> · B2:E2 = 4 × 1 = <b>4</b> · C1:G1 = 5 × 1 = <b>5</b> · A3:C5 = 3 × 3 = <b>9</b></div>
+    <h3>Cara memilih</h3>
+    <ul><li><b>Satu sel</b>: klik sel.</li><li><b>Range</b>: seret, atau klik sel awal, tahan <span class="k">Shift</span>, klik sel akhir.</li><li><b>Sel terpisah</b>: tahan <span class="k">Ctrl</span> sambil mengklik.</li><li><b>Lewat Kotak Nama</b>: ketik <code>C2:D4</code> lalu Enter. Coba di <a href="#lab">Ruang praktik</a>.</li></ul>
+  </div>
+
+  <div class="card itp" id="itp3">
+    <div class="row"><h2>ITP 3 · Membuat, membuka, menyunting, dan menyimpan file</h2><button class="btn small" data-paham="3" aria-pressed="false">Saya paham</button></div>
+    <div class="flow">
+      <div class="step"><div class="n">1</div><b>Buat</b>Blank workbook atau Ctrl + N</div>
+      <div class="step"><div class="n">2</div><b>Isi</b>Ketik angka, teks, formula, lalu Enter</div>
+      <div class="step"><div class="n">3</div><b>Sunting</b>Klik dua kali sel atau F2</div>
+      <div class="step"><div class="n">4</div><b>Simpan</b>Ctrl + S, beri nama, pilih format</div>
+      <div class="step"><div class="n">5</div><b>Buka lagi</b>File &gt; Buka atau Ctrl + O</div>
+    </div>
+    <div class="tablebox"><table class="t"><tr><th>Format</th><th>Keterangan</th></tr>
+      <tr><td><code>.xlsx</code></td><td>Format standar Excel; menyimpan data, rumus, dan tampilan</td></tr>
+      <tr><td><code>.ods</code></td><td>Format terbuka LibreOffice Calc</td></tr>
+      <tr><td><code>.csv</code></td><td>Teks dipisah koma; hanya data satu lembar, rumus dan tampilan tidak ikut</td></tr></table></div>
+    <ul><li>Ikuti instruksi guru untuk <b>nama, lokasi (folder), dan format</b> file, misalnya <code>Kas_Kelas7A.xlsx</code>.</li><li><b>Simpan sejak tahap penting</b> dan simpan berkala.</li><li>Google Sheets menyimpan otomatis; unduh dalam format lain lewat File &gt; Unduh.</li></ul>
+  </div>
+
+  <div class="card itp" id="itp4">
+    <div class="row"><h2>ITP 4 · Memasukkan angka, teks, dan formula</h2><button class="btn small" data-paham="4" aria-pressed="false">Saya paham</button></div>
+    <p>Konfirmasi isi dengan <span class="k">Enter</span> (pindah ke bawah) atau <span class="k">Tab</span> (pindah ke kanan). Alt + Enter membuat baris baru dalam satu sel.</p>
+    <div class="tablebox"><table class="t"><tr><th>Jenis isi</th><th>Ciri</th><th>Perataan awal</th></tr>
+      <tr><td><b>Angka</b></td><td>Hanya digit (boleh desimal), dapat dihitung</td><td>Rata kanan</td></tr>
+      <tr><td><b>Teks</b></td><td>Huruf atau campuran huruf dan angka</td><td>Rata kiri</td></tr>
+      <tr><td><b>Formula</b></td><td><b>Selalu diawali =</b>; sel menampilkan hasil, Bilah Rumus menampilkan rumus</td><td>Mengikuti hasil</td></tr></table></div>
+    <p>Operator: <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>^</code>. Urutan: kurung, pangkat, kali dan bagi, lalu tambah dan kurang.</p>
+    <div class="callout"><b class="h">Tips</b>
+      Nomor berawalan nol (NIS, telepon) kehilangan nol jika diketik biasa: <code>0812345</code> tampil <b>812345</b>. Ubah format sel menjadi Text sebelum mengetik, atau awali dengan tanda petik tunggal (<code>'0812345</code>).<br>
+      Format sel (Number, Alignment, Font, Border, Fill, Protection) hanya mengubah tampilan, bukan nilai.</div>
+    <h3>Kesalahan umum</h3>
+    <div class="tablebox"><table class="t"><tr><th>Tampil</th><th>Penyebab</th><th>Perbaikan</th></tr>
+      <tr><td>Rumus tampil sebagai teks</td><td>Lupa <code>=</code></td><td>Ketik <code>=C2+D2</code></td></tr>
+      <tr><td><code>#NAME?</code></td><td>Nama fungsi salah, misalnya <code>=SUMM(C2:C5)</code></td><td><code>=SUM(C2:C5)</code></td></tr>
+      <tr><td><code>#VALUE!</code></td><td>Menghitung sel berisi teks</td><td>Rujuk sel berisi angka</td></tr>
+      <tr><td><code>#DIV/0!</code></td><td>Pembagian dengan nol atau sel kosong</td><td>Isi pembagi selain nol</td></tr>
+      <tr><td><code>#####</code></td><td>Kolom terlalu sempit</td><td>Lebarkan kolom</td></tr></table></div>
+    <p>Semua kesalahan di atas bisa kamu bangkitkan sendiri di <a href="#lab">Ruang praktik</a>.</p>
+  </div>
+</section>
+
+<!-- ============ LAB ============ -->
+<section class="pane" id="p-lab" hidden>
+  <div class="card">
+    <h2>Ruang praktik: lembar kerja mini</h2>
+    <p>Ini tabel uang kas kelas 7A. Klik sel untuk melihat alamatnya, seret untuk memilih range, lalu ketik langsung atau lewat Bilah Rumus. Data awal hanyalah contoh.</p>
+    <div class="bars">
+      <input id="nameBox" aria-label="Kotak Nama: ketik alamat sel atau range lalu tekan Enter" value="A1" autocomplete="off" spellcheck="false">
+      <div class="fxwrap"><i>fx</i><input id="fx" aria-label="Bilah Rumus: isi sel aktif" autocomplete="off" spellcheck="false"></div>
+    </div>
+    <div class="sheetbox" role="application" aria-label="Lembar kerja mini"><table id="grid" tabindex="0"></table></div>
+    <div class="status" aria-live="polite">
+      <div>Sel aktif: <b id="stCell">A1</b> <span id="stPos"></span></div>
+      <div>Isi: <b id="stKind">-</b> <span id="stVal"></span></div>
+      <div>Range terpilih: <b id="stRange">A1</b> <span id="stCount"></span></div>
+    </div>
+    <div id="errMsg" class="msg" role="status"></div>
+    <div class="toolbar">
+      <button class="btn small" id="rangeMode" aria-pressed="false" title="Untuk layar sentuh: ketuk sel awal, nyalakan mode ini, lalu ketuk sel akhir">Mode range (layar sentuh)</button>
+      <button class="btn small ghost" id="resetData">Kembalikan data contoh</button>
+      <button class="btn small ghost" id="clearData">Kosongkan semua</button>
+    </div>
+    <p style="color:var(--muted);margin:0">Pintasan: panah = pindah, Shift + panah = perluas range, Enter = ke bawah, Tab = ke kanan, F2 = sunting, Delete = hapus isi.</p>
+  </div>
+
+  <div class="card">
+    <h2>Coba kesalahan umum</h2>
+    <p>Pilih sebuah sel (misalnya F3), tekan salah satu tombol, lalu baca penjelasannya.</p>
+    <div class="toolbar" id="tryChips">
+      <button class="btn small ghost" data-raw="5+3"><code>5+3</code></button>
+      <button class="btn small ghost" data-raw="=5+3"><code>=5+3</code></button>
+      <button class="btn small ghost" data-raw="=SUMM(C2:C4)"><code>=SUMM(C2:C4)</code></button>
+      <button class="btn small ghost" data-raw="=C2/0"><code>=C2/0</code></button>
+      <button class="btn small ghost" data-raw="=C2+B2"><code>=C2+B2</code></button>
+      <button class="btn small ghost" data-raw="0812345"><code>0812345</code></button>
+      <button class="btn small ghost" data-raw="'0812345"><code>'0812345</code></button>
+    </div>
+    <div id="tryOut" class="callout blue" style="margin:0">Belum ada yang dicoba.</div>
+  </div>
+
+  <div class="card">
+    <div class="row"><h2 style="margin:0">Tantangan</h2><span class="pill" id="chalCount">0 dari 5</span></div>
+    <ul class="chal" id="chal"></ul>
+  </div>
+</section>
+
+<!-- ============ LATIHAN ============ -->
+<section class="pane" id="p-latihan" hidden>
+  <div class="card">
+    <div class="row"><h2 style="margin:0">Latihan</h2><span class="score" id="qScore"></span></div>
+    <p style="margin-top:6px">Jawab semua soal lalu tekan <b>Periksa jawaban</b>. Setiap soal akan menampilkan alasan jawabannya.</p>
+  </div>
+  <div id="quiz"></div>
+  <div class="toolbar"><button class="btn" id="qCheck">Periksa jawaban</button><button class="btn ghost" id="qReset">Ulangi</button></div>
+</section>
+
+<!-- ============ REFLEKSI ============ -->
+<section class="pane" id="p-refleksi" hidden>
+  <div class="card refl">
+    <h2>Refleksi</h2>
+    <p>Beri tanda pada yang sudah kamu kuasai. Pelajari lagi bagian yang belum.</p>
+    <div id="reflList"></div>
+  </div>
+  <div class="card">
+    <h2>Kemajuan belajarmu</h2>
+    <div class="prog" id="prog"></div>
+    <p style="color:var(--muted);margin:10px 0 0">Kemajuan disimpan di peramban ini saja dan tidak dikirim ke guru.</p>
+  </div>
+</section>
+
+<!-- ============ SUMBER ============ -->
+<section class="pane" id="p-sumber" hidden>
+  <div class="card">
+    <h2>Sumber belajar</h2>
+    <p>Tautan dibuka dan diperiksa pada 15 November 2026. Mulailah dari buku siswa, lalu pakai tutorial untuk berlatih.</p>
+    <div class="src">
+      <div class="it"><a href="https://static-sc.cloudapp.web.id/content/pdf/bukuteks/kurikulum21/BS_INFORMATIKA_VII.pdf" target="_blank" rel="noopener">Buku Siswa Informatika Kelas VII (Kemendikbudristek)</a><small>Bab 2 Pengolahan Data, hal. 47–58: perkakas pengolah lembar kerja, workbook dan worksheet, cell dan range, membuat dan menyimpan file, format cell. Bahasa Indonesia.</small></div>
+      <div class="it"><a href="https://static.buku.kemdikbud.go.id/content/pdf/bukuteks/kurikulum21/Informatika-BS-KLS-VII.pdf" target="_blank" rel="noopener">Buku Siswa Informatika Kelas VII, edisi lain (portal buku)</a><small>Bab 6 Analisis Data: perkakas pengolah lembar kerja dan referensi cell. Bahasa Indonesia.</small></div>
+      <div class="it"><a href="https://www.guru99.com/id/introduction-to-microsoft-excel.html" target="_blank" rel="noopener">Catatan MS Excel 101 untuk Pemula (Guru99)</a><small>Workbook, worksheet, baris, kolom, sel, alamat sel, menyimpan file. Bahasa Indonesia.</small></div>
+      <div class="it"><a href="https://www.liputan6.com/feeds/read/5869338/apa-yang-dimaksud-dengan-sel-dalam-excel-panduan-lengkapnya" target="_blank" rel="noopener">Apa yang Dimaksud dengan Sel dalam Excel (Liputan6)</a><small>Sel, alamat sel, kolom, baris, dan range beserta contoh. Bahasa Indonesia.</small></div>
+      <div class="it"><a href="https://www.datacamp.com/id/blog/learn-excel" target="_blank" rel="noopener">Belajar Excel di 2026: Panduan Lengkap untuk Pemula (DataCamp)</a><small>Dasar-dasar Excel: antarmuka, rumus, grafik. Bahasa Indonesia.</small></div>
+      <div class="it"><a href="https://support.microsoft.com/office/94b00f50-5896-479c-b0c5-ff74603b35a3" target="_blank" rel="noopener">What is Excel? (Microsoft Support)</a><small>Membuat lembar kerja baru (Blank workbook, Ctrl + N), memasukkan data, membuat grafik. Bahasa Inggris.</small></div>
+      <div class="it"><a href="https://support.microsoft.com/excel/enter-data-manually-in-worksheet-cells" target="_blank" rel="noopener">Enter data manually in worksheet cells (Microsoft Support)</a><small>Memasukkan teks, angka, tanggal; Enter dan Tab; Alt + Enter; format Text untuk nomor. Bahasa Inggris.</small></div>
+    </div>
+    <p style="margin:12px 0 0"><b>Aplikasi untuk berlatih:</b> Microsoft Excel, Google Sheets (di peramban, perlu akun Google), atau LibreOffice Calc (gratis). Rumus dasarnya sama di ketiganya.</p>
+  </div>
+</section>
+</main>
+</div>
+
+<script>
+(function(){
+'use strict';
+/* ---------- penyimpanan ringan (boleh gagal) ---------- */
+var KEY='bk3tp1.v1';
+var store={paham:{},chal:{},refl:{},quiz:null};
+try{var raw=localStorage.getItem(KEY); if(raw){var o=JSON.parse(raw); if(o&&typeof o==='object'){store.paham=o.paham||{};store.chal=o.chal||{};store.refl=o.refl||{};store.quiz=o.quiz||null;}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+
+/* ---------- tab (hash) ---------- */
+var TABS=['materi','lab','latihan','refleksi','sumber'];
+function showTab(){
+  var h=(location.hash||'').replace('#',''); if(TABS.indexOf(h)<0)h='materi';
+  TABS.forEach(function(t){var p=$('#p-'+t); if(p)p.hidden=(t!==h);});
+  $$('#tabs a').forEach(function(a){ if(a.dataset.t===h)a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
+  if(h==='refleksi')renderProgress();
+}
+window.addEventListener('hashchange',function(){showTab();window.scrollTo(0,0);});
+
+/* ---------- Materi: tombol "Saya paham" ---------- */
+$$('[data-paham]').forEach(function(b){
+  var k=b.dataset.paham;
+  function paint(){var on=!!store.paham[k];b.setAttribute('aria-pressed',on?'true':'false');b.textContent=on?'Sudah paham':'Saya paham';}
+  paint();
+  b.addEventListener('click',function(){store.paham[k]=!store.paham[k];save();paint();});
+});
+
+/* =====================================================
+   LEMBAR KERJA MINI
+   ===================================================== */
+var COLS=['A','B','C','D','E','F'], NR=8;
+var SAMPLE={A1:'No',B1:'Nama',C1:'Minggu 1',D1:'Minggu 2',E1:'Total',F1:'Cek',
+  A2:'1',B2:'Rina',C2:'5000',D2:'5000',
+  A3:'2',B3:'Dimas',C3:'3000',D3:'5000',
+  A4:'3',B4:'Sari',C4:'5000',D4:'2000',F2:'C2+D2'};
+var cells={}; var cache={};
+function loadSample(){cells={};for(var k in SAMPLE)cells[k]=SAMPLE[k];}
+loadSample();
+function addr(r,c){return COLS[c]+r;}
+function parseAddr(s){var m=/^([A-Za-z]+)(\d+)$/.exec((s||'').trim()); if(!m)return null; var c=COLS.indexOf(m[1].toUpperCase()); var r=parseInt(m[2],10); if(c<0||r<1||r>NR)return null; return {r:r,c:c};}
+function inGrid(s){return !!parseAddr(s);}
+
+var ERR={
+ '#NAME?':'Nama fungsi atau alamat tidak dikenal. Periksa ejaannya, misalnya SUMM seharusnya SUM.',
+ '#DIV/0!':'Pembagian dengan nol atau sel kosong. Ganti pembagi dengan angka selain nol.',
+ '#VALUE!':'Rumus mencoba menghitung teks. Rujuk sel yang berisi angka.',
+ '#REF!':'Alamat berada di luar lembar, atau rumus merujuk dirinya sendiri.',
+ '#ERROR!':'Rumus tidak lengkap atau salah tulis. Periksa tanda kurung dan operatornya.'
+};
+function E(c){return {t:'err',e:c};}
+function N(v){return {t:'num',v:v};}
+
+function tokenize(src){
+  var toks=[],i=0,m,rest,ch;
+  while(i<src.length){
+    ch=src[i]; if(/\s/.test(ch)){i++;continue;}
+    rest=src.slice(i);
+    if((m=/^\d+(?:[.,]\d+)?/.exec(rest))){toks.push({k:'num',v:m[0]});i+=m[0].length;continue;}
+    if((m=/^[A-Za-z]+\d+:[A-Za-z]+\d+/.exec(rest))){toks.push({k:'range',v:m[0]});i+=m[0].length;continue;}
+    if((m=/^[A-Za-z]+\d+(?![A-Za-z0-9_(])/.exec(rest))){toks.push({k:'ref',v:m[0]});i+=m[0].length;continue;}
+    if((m=/^[A-Za-z_][A-Za-z_0-9]*/.exec(rest))){var after=rest.slice(m[0].length).replace(/^\s+/,'')[0];toks.push({k:after==='('?'func':'name',v:m[0].toUpperCase()});i+=m[0].length;continue;}
+    if('+-*/^(),;'.indexOf(ch)>=0){toks.push({k:'op',v:ch});i++;continue;}
+    throw E('#ERROR!');
+  }
+  return toks;
+}
+function getVal(a,visiting){
+  if(cache[a])return cache[a];
+  if(visiting[a])return E('#REF!');
+  var raw=cells[a]; var res;
+  if(raw===undefined||raw==='')res={t:'blank'};
+  else if(raw.charAt(0)==='='){visiting[a]=true;try{res=evalFormula(raw.slice(1),visiting);}catch(e){res=(e&&e.t==='err')?e:E('#ERROR!');}delete visiting[a];}
+  else if(raw.charAt(0)==="'")res={t:'text',v:raw.slice(1)};
+  else if(/^-?\d+(?:[.,]\d+)?$/.test(raw.trim()))res=N(parseFloat(raw.trim().replace(',','.')));
+  else res={t:'text',v:raw};
+  if(!(raw&&raw.charAt(0)==='='&&Object.keys(visiting).length>0))cache[a]=res;
+  return res;
+}
+function evalFormula(src,visiting){
+  var toks=tokenize(src),p=0;
+  if(!toks.length)throw E('#ERROR!');
+  function peek(){return toks[p];}
+  function eat(v){var t=toks[p]; if(t&&t.k==='op'&&t.v===v){p++;return true;}return false;}
+  function num(x){ if(x.t==='err')throw x; if(x.t==='blank')return 0; if(x.t==='num')return x.v; throw E('#VALUE!'); }
+  function cellRange(s){var pr=s.split(':');var a=parseAddr(pr[0]),b=parseAddr(pr[1]);if(!a||!b)throw E('#REF!');var out=[];for(var r=Math.min(a.r,b.r);r<=Math.max(a.r,b.r);r++)for(var c=Math.min(a.c,b.c);c<=Math.max(a.c,b.c);c++)out.push(getVal(addr(r,c),visiting));return out;}
+  function expr(){var v=term();for(;;){if(eat('+'))v=N(num(v)+num(term()));else if(eat('-'))v=N(num(v)-num(term()));else break;}return v;}
+  function term(){var v=power();for(;;){if(eat('*'))v=N(num(v)*num(power()));else if(eat('/')){var d=num(power());var n=num(v);if(d===0)throw E('#DIV/0!');v=N(n/d);}else break;}return v;}
+  function power(){var b=unary();if(eat('^')){var e=power();return N(Math.pow(num(b),num(e)));}return b;}
+  function unary(){if(eat('-'))return N(-num(unary()));if(eat('+'))return unary();return primary();}
+  function primary(){
+    var t=toks[p++]; if(!t)throw E('#ERROR!');
+    if(t.k==='num')return N(parseFloat(t.v.replace(',','.')));
+    if(t.k==='ref'){var a=parseAddr(t.v);if(!a)throw E('#REF!');return getVal(addr(a.r,a.c),visiting);}
+    if(t.k==='range')throw E('#VALUE!');
+    if(t.k==='name')throw E('#NAME?');
+    if(t.k==='func')return callFn(t.v);
+    if(t.k==='op'&&t.v==='('){var v=expr();if(!eat(')'))throw E('#ERROR!');return v;}
+    throw E('#ERROR!');
+  }
+  function callFn(name){
+    var known={SUM:1,AVERAGE:1,COUNT:1,MIN:1,MAX:1};
+    if(!known[name])throw E('#NAME?');
+    if(!eat('('))throw E('#ERROR!');
+    var nums=[]; var first=true;
+    while(!eat(')')){
+      if(!first){if(!(eat(',')||eat(';')))throw E('#ERROR!');}
+      first=false;
+      var t=peek(); if(!t)throw E('#ERROR!');
+      if(t.k==='range'){p++;cellRange(t.v).forEach(function(x){if(x.t==='err')throw x;if(x.t==='num')nums.push(x.v);});}
+      else {var v=expr(); if(v.t==='err')throw v; if(v.t==='num')nums.push(v.v); else if(v.t==='text')throw E('#VALUE!');}
+    }
+    if(name==='COUNT')return N(nums.length);
+    if(name==='SUM')return N(nums.reduce(function(a,b){return a+b;},0));
+    if(!nums.length){if(name==='AVERAGE')throw E('#DIV/0!');return N(0);}
+    if(name==='AVERAGE')return N(nums.reduce(function(a,b){return a+b;},0)/nums.length);
+    if(name==='MIN')return N(Math.min.apply(null,nums));
+    return N(Math.max.apply(null,nums));
+  }
+  var v=expr(); if(p<toks.length)throw E('#ERROR!'); return v;
+}
+function valueOf(a){cache={};return getVal(a,{});}
+function fmt(res){
+  if(!res||res.t==='blank')return '';
+  if(res.t==='err')return res.e;
+  if(res.t==='text')return res.v;
+  var s=String(Math.round(res.v*1e9)/1e9); return s.replace('.',',');
+}
+function kindOf(a){
+  var raw=cells[a]; if(raw===undefined||raw==='')return 'Kosong';
+  var v=valueOf(a);
+  if(raw.charAt(0)==='=')return v.t==='err'?'Formula (hasilnya kesalahan)':'Formula';
+  return v.t==='num'?'Angka':'Teks';
+}
+
+/* ---------- seleksi ---------- */
+var anchor={r:1,c:0},focusC={r:1,c:0};
+function rng(){return {r1:Math.min(anchor.r,focusC.r),r2:Math.max(anchor.r,focusC.r),c1:Math.min(anchor.c,focusC.c),c2:Math.max(anchor.c,focusC.c)};}
+function rngText(){var g=rng();return g.r1===g.r2&&g.c1===g.c2?addr(g.r1,g.c1):addr(g.r1,g.c1)+':'+addr(g.r2,g.c2);}
+function active(){return addr(focusC.r,focusC.c);}
+
+var gridEl=$('#grid'),fx=$('#fx'),nameBox=$('#nameBox');
+function buildGrid(){
+  var h='<thead><tr><th class="rh"></th>'+COLS.map(function(c){return '<th data-col="'+c+'">'+c+'</th>';}).join('')+'</tr></thead><tbody>';
+  for(var r=1;r<=NR;r++){h+='<tr><th class="rh" data-row="'+r+'">'+r+'</th>';for(var c=0;c<COLS.length;c++)h+='<td data-a="'+addr(r,c)+'"></td>';h+='</tr>';}
+  gridEl.innerHTML=h+'</tbody>';
+}
+buildGrid();
+var editing=false;
+function paint(){
+  cache={}; var g=rng(), act=active();
+  $$('#grid td').forEach(function(td){
+    var a=td.dataset.a,p=parseAddr(a),res=valueOf(a);
+    td.textContent=fmt(res);
+    td.className=(res.t==='num'?'num':res.t==='err'?'err':'')+(p.r>=g.r1&&p.r<=g.r2&&p.c>=g.c1&&p.c<=g.c2?' in':'')+(a===act?' act':'');
+  });
+  $$('#grid th[data-col]').forEach(function(th){var c=COLS.indexOf(th.dataset.col);th.className=(c>=g.c1&&c<=g.c2)?'hl':'';});
+  $$('#grid th[data-row]').forEach(function(th){var r=+th.dataset.row;th.className='rh'+((r>=g.r1&&r<=g.r2)?' rhl':'');});
+  if(!editing){fx.value=cells[act]||'';}
+  if(document.activeElement!==nameBox)nameBox.value=rngText().indexOf(':')>0?rngText():act;
+  status();
+}
+function status(){
+  var a=active(),raw=cells[a],res=valueOf(a),g=rng();
+  $('#stCell').textContent=a;
+  $('#stPos').textContent='(kolom '+COLS[focusC.c]+', baris '+focusC.r+')';
+  $('#stKind').textContent=kindOf(a);
+  var vt=(raw===undefined||raw==='')?'':(raw.charAt(0)==='='?'rumus '+raw+' menghasilkan '+fmt(res):(res.t==='num'?'nilai '+fmt(res):'"'+fmt(res)+'"'));
+  $('#stVal').textContent=vt?'· '+vt:'';
+  $('#stRange').textContent=rngText();
+  var nc=g.c2-g.c1+1,nr=g.r2-g.r1+1;
+  $('#stCount').textContent='· '+nc+' kolom × '+nr+' baris = '+(nc*nr)+' sel';
+  var m=$('#errMsg');
+  if(res.t==='err'){m.textContent=res.e+' : '+ERR[res.e];m.classList.add('show');}
+  else if(raw&&/^[A-Za-z]+\d+([+\-*/^].+)$/.test(raw.trim())&&raw.charAt(0)!=='='){m.textContent='Isi sel ini tampil sebagai teks karena tidak diawali tanda sama dengan (=). Coba ketik =' +raw.trim()+'.';m.classList.add('show');}
+  else if(raw&&/^0\d+$/.test(raw.trim())){m.textContent='Angka nol di depan hilang karena sel menganggapnya angka. Awali dengan tanda petik tunggal (’) atau ubah format sel menjadi Text.';m.classList.add('show');}
+  else {m.classList.remove('show');m.textContent='';}
+  checkChallenges();
+}
+function select(r,c,extend){
+  r=Math.max(1,Math.min(NR,r));c=Math.max(0,Math.min(COLS.length-1,c));
+  focusC={r:r,c:c}; if(!extend)anchor={r:r,c:c};
+  editing=false; paint();
+}
+/* mouse */
+var dragging=false;
+gridEl.addEventListener('mousedown',function(e){
+  var td=e.target.closest('td'); if(!td)return; commitEdit();
+  var p=parseAddr(td.dataset.a); dragging=true;
+  if(e.shiftKey||$('#rangeMode').getAttribute('aria-pressed')==='true')select(p.r,p.c,true); else select(p.r,p.c,false);
+  gridEl.focus({preventScroll:true}); e.preventDefault();
+});
+gridEl.addEventListener('mouseover',function(e){if(!dragging)return;var td=e.target.closest('td');if(!td)return;var p=parseAddr(td.dataset.a);if(p.r!==focusC.r||p.c!==focusC.c)select(p.r,p.c,true);});
+document.addEventListener('mouseup',function(){dragging=false;});
+gridEl.addEventListener('click',function(e){ /* layar sentuh: ketukan = pilih sel */
+  if(e.detail===0)return;
+});
+gridEl.addEventListener('touchend',function(e){
+  var t=e.changedTouches&&e.changedTouches[0]; if(!t)return;
+  var el=document.elementFromPoint(t.clientX,t.clientY); var td=el&&el.closest&&el.closest('td'); if(!td)return;
+  var p=parseAddr(td.dataset.a); commitEdit();
+  select(p.r,p.c,$('#rangeMode').getAttribute('aria-pressed')==='true'); e.preventDefault();
+},{passive:false});
+gridEl.addEventListener('dblclick',function(){startEdit(false);});
+/* keyboard */
+gridEl.addEventListener('keydown',function(e){
+  var k=e.key,ex=e.shiftKey;
+  if(k==='ArrowUp'){select(focusC.r-1,focusC.c,ex);e.preventDefault();}
+  else if(k==='ArrowDown'||k==='Enter'){select(focusC.r+1,focusC.c,ex&&k!=='Enter');e.preventDefault();}
+  else if(k==='ArrowLeft'){select(focusC.r,focusC.c-1,ex);e.preventDefault();}
+  else if(k==='ArrowRight'||k==='Tab'){select(focusC.r,focusC.c+1,ex&&k!=='Tab');e.preventDefault();}
+  else if(k==='F2'){startEdit(false);e.preventDefault();}
+  else if(k==='Delete'||k==='Backspace'){var g=rng();for(var r=g.r1;r<=g.r2;r++)for(var c=g.c1;c<=g.c2;c++)delete cells[addr(r,c)];paint();e.preventDefault();}
+  else if(k.length===1&&!e.ctrlKey&&!e.metaKey&&!e.altKey){startEdit(true,k);e.preventDefault();}
+});
+function startEdit(replace,ch){
+  editing=true; fx.focus();
+  if(replace){fx.value=ch||'';}
+  var l=fx.value.length;try{fx.setSelectionRange(l,l);}catch(e){}
+  preview();
+}
+/* bilah rumus */
+var origVal='';
+fx.addEventListener('focus',function(){editing=true;origVal=cells[active()]||'';});
+fx.addEventListener('input',function(){editing=true;preview();});
+fx.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){commitEdit();select(focusC.r+1,focusC.c,false);gridEl.focus({preventScroll:true});e.preventDefault();}
+  else if(e.key==='Tab'){commitEdit();select(focusC.r,focusC.c+1,false);gridEl.focus({preventScroll:true});e.preventDefault();}
+  else if(e.key==='Escape'){editing=false;fx.value=origVal;paint();gridEl.focus({preventScroll:true});e.preventDefault();}
+});
+fx.addEventListener('blur',function(){commitEdit();});
+function commitEdit(){
+  if(!editing)return; editing=false;
+  var a=active(),v=fx.value;
+  if(v===''||v===undefined)delete cells[a]; else cells[a]=v;
+  paint();
+}
+function preview(){
+  var a=active(),save=cells[a]; cells[a]=fx.value; cache={}; var res=getVal(a,{});
+  var out=fx.value===''?'':(fx.value.charAt(0)==='='?'Hasil sementara: '+fmt(res):(res.t==='num'?'Akan tersimpan sebagai angka: '+fmt(res):'Akan tersimpan sebagai teks'));
+  if(save===undefined)delete cells[a]; else cells[a]=save; cache={};
+  $('#stVal').textContent=out?'· '+out:'';
+}
+/* kotak nama */
+nameBox.addEventListener('keydown',function(e){
+  if(e.key!=='Enter')return;
+  var v=nameBox.value.trim().toUpperCase(),pr=v.split(':'),a=parseAddr(pr[0]);
+  if(pr.length<=2&&a&&(pr.length===1||parseAddr(pr[1]))){
+    var b=pr.length===2?parseAddr(pr[1]):a; anchor={r:a.r,c:a.c};focusC={r:b.r,c:b.c};
+    if(pr.length===2){var g=rng();focusC={r:g.r2,c:g.c2};anchor={r:g.r1,c:g.c1};}
+    editing=false;nameBox.blur();paint();gridEl.focus({preventScroll:true});
+  }else{var m=$('#errMsg');m.textContent='Alamat "'+nameBox.value+'" tidak dikenal. Tulis seperti B3 atau C2:D4 (kolom A sampai F, baris 1 sampai '+NR+').';m.classList.add('show');}
+});
+nameBox.addEventListener('focus',function(){nameBox.select();});
+nameBox.addEventListener('blur',function(){paint();});
+/* tombol */
+$('#rangeMode').addEventListener('click',function(){var on=this.getAttribute('aria-pressed')==='true';this.setAttribute('aria-pressed',on?'false':'true');this.textContent=on?'Mode range (layar sentuh)':'Mode range aktif: ketuk sel akhir';});
+$('#resetData').addEventListener('click',function(){loadSample();anchor=focusC={r:1,c:0};focusC={r:1,c:0};editing=false;paint();});
+$('#clearData').addEventListener('click',function(){cells={};editing=false;paint();});
+/* coba kesalahan */
+$('#tryChips').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-raw]'); if(!b)return;
+  var raw=b.dataset.raw,a=active(); cells[a]=raw; editing=false; paint();
+  var res=valueOf(a),out;
+  if(res.t==='err')out='Di '+a+' tertulis <code>'+esc(raw)+'</code> dan tampil <b>'+res.e+'</b>. '+esc(ERR[res.e]);
+  else if(raw.charAt(0)==='=')out='Di '+a+' tertulis <code>'+esc(raw)+'</code> dan tampil <b>'+esc(fmt(res))+'</b>. Rumus benar karena diawali tanda sama dengan.';
+  else if(raw.charAt(0)==="'")out='Tanda petik tunggal memaksa isi dianggap teks, sehingga <b>'+esc(fmt(res))+'</b> tampil lengkap dengan nol di depan (rata kiri).';
+  else if(res.t==='num')out='Isi <code>'+esc(raw)+'</code> dianggap angka sehingga tampil <b>'+esc(fmt(res))+'</b> (nol di depan hilang, rata kanan).';
+  else out='Isi <code>'+esc(raw)+'</code> dianggap teks, bukan rumus, karena tidak diawali tanda sama dengan (=). Sel menampilkannya apa adanya.';
+  $('#tryOut').innerHTML=out;
+});
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+/* ---------- tantangan ---------- */
+var CH=[
+ {id:'c1',t:'Pilih sel <b>B3</b> (nama Dimas).',ok:function(){return rngText()==='B3';}},
+ {id:'c2',t:'Pilih range <b>C2:D4</b> (semua angka uang kas). Seret, atau ketik C2:D4 di Kotak Nama.',ok:function(){return rngText()==='C2:D4';}},
+ {id:'c3',t:'Hitung total Rina: isi <b>E2</b> dengan rumus yang menghasilkan 10000.',ok:function(){return fe('E2',10000);}},
+ {id:'c4',t:'Isi <b>E3</b> dan <b>E4</b> dengan rumus sehingga totalnya 8000 dan 7000.',ok:function(){return fe('E3',8000)&&fe('E4',7000);}},
+ {id:'c5',t:'Sel <b>F2</b> berisi <code>C2+D2</code> dan tampil sebagai teks. Perbaiki agar menampilkan 10000.',ok:function(){return fe('F2',10000);}}
+];
+function fe(a,v){var raw=cells[a];if(!raw||raw.charAt(0)!=='=')return false;var r=valueOf(a);return r.t==='num'&&r.v===v;}
+var chalEl=$('#chal');
+chalEl.innerHTML=CH.map(function(c){return '<li id="'+c.id+'"><span class="ck">✓</span><span>'+c.t+'</span></li>';}).join('');
+function checkChallenges(){
+  var n=0;
+  CH.forEach(function(c){
+    if(!store.chal[c.id]&&c.ok()){store.chal[c.id]=true;save();}
+    var li=$('#'+c.id);li.classList.toggle('done',!!store.chal[c.id]);if(store.chal[c.id])n++;
+  });
+  $('#chalCount').textContent=n+' dari '+CH.length;
+  $('#chalCount').className='pill'+(n===CH.length?' ok':'');
+}
+paint();
+
+/* =====================================================
+   LATIHAN
+   ===================================================== */
+var QS=[
+ {id:1,k:'text',q:'Tulis alamat sel pertemuan kolom D dan baris 7.',ans:function(v){return v.replace(/\s/g,'').toUpperCase()==='D7';},why:'Baca kolom dulu, baru baris: kolom D dan baris 7 adalah D7.'},
+ {id:2,k:'num',q:'Berapa banyak sel dalam range B2:E4?',ans:function(v){return Number(v)===12;},why:'Kolom B sampai E ada 4, baris 2 sampai 4 ada 3. 4 × 3 = 12 sel.'},
+ {id:3,k:'mc',q:'Di sel A3 kamu mengetik A1+A2 (tanpa tanda sama dengan). Apa yang tampil?',opts:['Hasil penjumlahan A1 dan A2','Teks A1+A2 apa adanya','#DIV/0!','Sel tetap kosong'],c:1,why:'Isi yang tidak diawali = dianggap teks, jadi tampil apa adanya. Perbaikannya =A1+A2.'},
+ {id:4,k:'mc',q:'Apa perbedaan workbook dan worksheet?',opts:['Workbook adalah satu sel; worksheet adalah satu baris','Keduanya sama, hanya beda nama aplikasi','Worksheet adalah file; workbook adalah lembar di dalamnya','Workbook adalah satu file; worksheet adalah lembar di dalam file itu'],c:3,why:'Satu file lembar kerja = workbook. Lembar di dalamnya (Sheet1, Sheet2, ...) = worksheet.'},
+ {id:5,k:'multi',q:'Pilih semua pernyataan yang benar.',opts:['Angka biasanya rata kanan','Formula boleh diawali huruf apa saja','Teks biasanya rata kiri','Tab memindahkan pilihan ke sel di bawah','Formula diawali tanda sama dengan (=)'],c:[0,2,4],why:'Angka rata kanan, teks rata kiri, formula diawali =. Enter pindah ke bawah, Tab pindah ke kanan.'},
+ {id:6,k:'mc',q:'NIS 0812345 yang diketik tampil sebagai 812345. Mengapa dan apa solusinya?',opts:['Komputer rusak; ketik ulang berkali-kali','Dianggap angka sehingga nol di depan hilang; ubah format sel menjadi Text sebelum mengetik','Kolom terlalu sempit; lebarkan kolom','Nama fungsi salah; ganti dengan SUM'],c:1,why:'Angka tidak menyimpan nol di depan. Format Text atau tanda petik tunggal membuatnya tersimpan sebagai teks.'},
+ {id:7,k:'mc',q:'Urutan yang benar untuk menyimpan file baru bernama Kas_Kelas7A.xlsx?',opts:['Ketik nama, Ctrl + N, Simpan, pilih lokasi','Simpan, tutup aplikasi, ketik nama','Ctrl + S, pilih lokasi (Browse), ketik nama Kas_Kelas7A, pilih format .xlsx, Simpan','Pilih format .csv, Ctrl + O, Simpan'],c:2,why:'Ctrl + S membuka kotak simpan: pilih lokasi, beri nama, pilih format, lalu Simpan. Ctrl + N membuat file baru dan Ctrl + O membuka file.'},
+ {id:8,k:'num',q:'Range C1:G1 terdiri atas berapa sel?',ans:function(v){return Number(v)===5;},why:'Kolom C sampai G ada 5, hanya 1 baris. 5 × 1 = 5 sel.'}
+];
+var quizEl=$('#quiz');
+function renderQuiz(){
+  quizEl.innerHTML=QS.map(function(q){
+    var body='';
+    if(q.k==='text')body='<input type="text" id="a'+q.id+'" aria-label="Jawaban soal '+q.id+'" autocomplete="off">';
+    else if(q.k==='num')body='<input type="number" id="a'+q.id+'" aria-label="Jawaban soal '+q.id+'" inputmode="numeric">';
+    else body=q.opts.map(function(o,i){return '<label><input type="'+(q.k==='multi'?'checkbox':'radio')+'" name="q'+q.id+'" value="'+i+'"> <span>'+esc(o)+'</span></label>';}).join('');
+    return '<div class="q" id="q'+q.id+'"><div class="qt">'+q.id+'. '+esc(q.q)+'</div>'+body+'<div class="fb" id="fb'+q.id+'"></div></div>';
+  }).join('');
+}
+renderQuiz();
+function checkQuiz(){
+  var score=0;
+  QS.forEach(function(q){
+    var ok=false,el=$('#q'+q.id),fb=$('#fb'+q.id),given=false;
+    if(q.k==='text'||q.k==='num'){var v=$('#a'+q.id).value; given=v.trim()!==''; ok=given&&q.ans(v);}
+    else if(q.k==='mc'){var r=$('input[name=q'+q.id+']:checked'); given=!!r; ok=given&&(+r.value===q.c);}
+    else {var sel=$$('input[name=q'+q.id+']:checked').map(function(x){return +x.value;}).sort(); given=sel.length>0; ok=given&&JSON.stringify(sel)===JSON.stringify(q.c);}
+    if(ok)score++;
+    el.className='q '+(ok?'ok':'no');
+    fb.className='fb show';
+    fb.innerHTML=(ok?'<b style="color:var(--good)">Benar.</b> ':(given?'<b style="color:var(--bad)">Belum tepat.</b> ':'<b style="color:var(--bad)">Belum dijawab.</b> '))+esc(q.why);
+  });
+  store.quiz={score:score,total:QS.length};save();
+  $('#qScore').textContent='Skor: '+score+' dari '+QS.length;
+}
+$('#qCheck').addEventListener('click',checkQuiz);
+$('#qReset').addEventListener('click',function(){renderQuiz();$('#qScore').textContent='';store.quiz=null;save();});
+if(store.quiz)$('#qScore').textContent='Skor terakhir: '+store.quiz.score+' dari '+store.quiz.total;
+
+/* =====================================================
+   REFLEKSI
+   ===================================================== */
+var RF=['Saya dapat menjelaskan pengertian dan fungsi lembar kerja dengan kata-kata sendiri (ITP 1).','Saya dapat menunjukkan baris, kolom, sel, dan range serta menyebut alamatnya (ITP 2).','Saya dapat membuat, membuka, menyunting, dan menyimpan file dengan nama dan format yang diminta (ITP 3).','Saya dapat mengisi angka, teks, dan formula dengan benar (ITP 4).','Saya dapat memperbaiki rumus yang salah tulis (ITP 4).'];
+$('#reflList').innerHTML=RF.map(function(t,i){return '<label><input type="checkbox" data-r="'+i+'"'+(store.refl[i]?' checked':'')+'> <span>'+esc(t)+'</span></label>';}).join('');
+$('#reflList').addEventListener('change',function(e){var i=e.target.dataset.r;if(i===undefined)return;store.refl[i]=e.target.checked;save();renderProgress();});
+function cnt(o){return Object.keys(o).filter(function(k){return o[k];}).length;}
+function renderProgress(){
+  var rows=[['Materi dipahami (ITP 1–4)',cnt(store.paham),4],['Tantangan ruang praktik',cnt(store.chal),CH.length],['Skor latihan',store.quiz?store.quiz.score:0,QS.length],['Refleksi dicentang',cnt(store.refl),RF.length]];
+  $('#prog').innerHTML=rows.map(function(r){return '<div class="r"><span>'+r[0]+'</span><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+r[2]+'" aria-valuenow="'+r[1]+'"><i style="width:'+Math.round(r[1]/r[2]*100)+'%"></i></div><b>'+r[1]+'/'+r[2]+'</b></div>';}).join('');
+}
+renderProgress();
+showTab();
+})();
+</script>
+
+</body></html>
